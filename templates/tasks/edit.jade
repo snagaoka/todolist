@@ -1,0 +1,12 @@
+extends ../layout.jade
+
+block content
+	form(action="/tasks/#{task._id}?_method=PUT", method="POST", enctype="application/x-www-form-urlencoded")
+		p
+			label(for="title_input") Title:
+			input#title_input(type="text", name="title", value="#{task.title}")
+		p
+			label(for="body_input") Body:
+			input#body_input(type="text", name="body", value="#{task.body}")
+		p
+			button Save

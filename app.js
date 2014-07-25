@@ -8,7 +8,7 @@ var methodOverride = require('method-override');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(methodOverride()); // must be after bodyParser
+app.use(methodOverride()); // must be after bodyParser, allows PUT request 
 app.set('views', __dirname + '/templates');
 mongoose.connect('mongodb://user1:monguse53@ds053429.mongolab.com:53429/tasksdb'); // add login
 
@@ -72,7 +72,11 @@ app.get('/tasks/:id', function (req, res){
 
 // EDIT / EDIT --> UPDATE similar to NEW --> CREATE
 // GET /tasks/:id/edit 
-
+app.get('/tasks/:id/edit', function (req, res){
+	TaskModel.findById(req.param('id'), function (err, task){
+		res.render('tasks/edit.jade', {task: task});
+	});
+});
 
 
 
