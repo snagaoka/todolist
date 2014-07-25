@@ -26,10 +26,12 @@ var TaskSchema = new Schema({
 var TaskModel = mongoose.model('task', TaskSchema);
 
 
-// Gets list
-
+// LIST / lists ALL tasks 
+// GET /tasks #TODO  <-- server gets data from DB (mongo DB), displays all tasks on redirected page
 app.get('/', function (req, res) {
-	res.send('To-Do List');
+	TaskModel.find(function (err, tasks){
+		res.render('tasks/list.jade', {tasks: tasks});
+	});
 }); // TEST by typing "nodemon app.js in terminal, then go to browser (localhost:3000)"
 
 app.set('views', __dirname + '/templates');
@@ -63,8 +65,6 @@ app.post('/tasks', function (req, res){
 
 
 
-// GET / gets ALL tasks 
-// GET /tasks #TODO  <-- server gets data from DB (mongo DB), displays all tasks on redirected page
 
 
 
