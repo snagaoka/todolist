@@ -97,6 +97,12 @@ app.put('/tasks/:id', function (req, res){
 
 // DELETE
 // DEL /tasks/:id
+app.del('/tasks/:id', function (req, res){
+	TaskModel.findByIdAndRemove(req.param('id'), function (task){
+		res.redirect('/');
+	});
+});
+
 
 
 

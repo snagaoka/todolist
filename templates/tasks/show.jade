@@ -6,3 +6,6 @@ block content
 
 	a(href="/tasks/#{task._id}/edit") 
 		button Edit
+
+	form(action="/tasks/#{task._id}?_method=DELETE", method="POST")
+		button Delete
