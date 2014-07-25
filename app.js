@@ -2,12 +2,12 @@
 var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/my_database'); // add login
+mongoose.connect('mongodb://user1:monguse53@ds053429.mongolab.com:53429/tasksdb'); // add login
 var jade = require('jade');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodOverride());
 
@@ -32,7 +32,7 @@ app.get('/', function (req, res) {
 	res.send('To-Do List');
 }); // TEST by typing "nodemon app.js in terminal, then go to browser (localhost:3000)"
 
-app.set('views', _direname + '/templates');
+app.set('views', __dirname + '/templates');
 // add body parser
 // add method overwrite
 
