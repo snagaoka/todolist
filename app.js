@@ -17,13 +17,13 @@ app.use(methodOverride());
 var Schema = mongoose.Schema;
   //, ObjectId = Schema.ObjectId;
 
-var toDoSchema = new Schema({
+var TaskSchema = new Schema({
 	title     : String
   , body      : String
   //, date      : Date
 });
 
-var toDoModel = mongoose.model('toDo', toDoSchema);
+var TaskModel = mongoose.model('task', TaskSchema);
 
 
 // Gets list
@@ -43,13 +43,23 @@ app.set('views', __dirname + '/templates');
 // NEW  
 // GET /tasks/new  <-- new form, shows empty form to user
 app.get('/tasks/new', function (req, res){
-	res.send();
+	res.render('tasks/new.jade');
 });
 
 
 // CREATE 
 // POST /tasks  <-- allows user to post task item in form field, server receives, then sends to DB 
+app.post('/tasks', function (req, res){
+	var task = new TaskModel(); // instantiate new TaskModel
+	task.title = req.param('title');
+	task.body = req.param('body');
+	task.save(function(err, t){
+		// this executes when task completes saving to DB
+		if(err) res.send(500, err); // error handling
 
+		res.redirect('/'); // successful save
+	});
+});
 
 
 
