@@ -4,6 +4,9 @@ block content
 	ul
 		each task in tasks
 			li 
-				span.title= task.title
+				a(href="/tasks/#{task._id}")
+					span.title= task.title
 				br
 				span.body= task.body
+
+

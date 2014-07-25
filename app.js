@@ -2,18 +2,17 @@
 var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://user1:monguse53@ds053429.mongolab.com:53429/tasksdb'); // add login
 var jade = require('jade');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(methodOverride());
-
+app.use(methodOverride()); // must be after bodyParser
+app.set('views', __dirname + '/templates');
+mongoose.connect('mongodb://user1:monguse53@ds053429.mongolab.com:53429/tasksdb'); // add login
 
 // Sets up schema type for mongoose
-
 var Schema = mongoose.Schema;
   //, ObjectId = Schema.ObjectId;
 
@@ -26,21 +25,17 @@ var TaskSchema = new Schema({
 var TaskModel = mongoose.model('task', TaskSchema);
 
 
+// CRUD TaskItems
+// INDEX
+
 // LIST / lists ALL tasks 
 // GET /tasks #TODO  <-- server gets data from DB (mongo DB), displays all tasks on redirected page
 app.get('/', function (req, res) {
 	TaskModel.find(function (err, tasks){
 		res.render('tasks/list.jade', {tasks: tasks});
 	});
-}); // TEST by typing "nodemon app.js in terminal, then go to browser (localhost:3000)"
+}); // TEST by typing "nodemon app.js" in terminal, then go to browser (localhost:3000)"
 
-app.set('views', __dirname + '/templates');
-// add body parser
-// add method overwrite
-
-
-// CRUD TaskItems
-// INDEX
 
 // NEW  
 // GET /tasks/new  <-- new form, shows empty form to user
@@ -64,17 +59,15 @@ app.post('/tasks', function (req, res){
 });
 
 
-
-
-
-
-
 // SHOW / gets ONE task 
 // GET /tasks/:id  <-- server gets data from DB, displays single task on new page
+app.get('/tasks/:id', function (req, res){
+	TaskModel.findById(req.param('id'), function (err, task){
+		if(err) res.send(500, err);
 
-
-
-
+		res.render('tasks/show.jade', {task: task});
+	});
+});
 
 
 // EDIT / EDIT --> UPDATE similar to NEW --> CREATE
