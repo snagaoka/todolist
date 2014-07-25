@@ -8,7 +8,8 @@ var methodOverride = require('method-override');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(methodOverride()); // must be after bodyParser, allows PUT request 
+app.use(methodOverride('_method')); // must be after bodyParser, allows PUT request 
+
 app.set('views', __dirname + '/templates');
 mongoose.connect('mongodb://user1:monguse53@ds053429.mongolab.com:53429/tasksdb'); // add login
 
@@ -79,13 +80,19 @@ app.get('/tasks/:id/edit', function (req, res){
 });
 
 
-
 // UPDATE
 // PUT /tasks/:id
+app.put('/tasks/:id', function (req, res){
+	TaskModel.findById(req.param('id'), function (err, task){
+		task.title = req.param('title');
+		task.body = req.param('body');
+		task.save(function (err, t){
+			if(err) res.send(500, err);
 
-
-
-
+			res.redirect('/');
+		});
+	});
+});
 
 
 // DELETE
