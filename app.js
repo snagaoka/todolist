@@ -20,6 +20,7 @@ var Schema = mongoose.Schema;
 var TaskSchema = new Schema({
 	title     : String
   , body      : String
+  ,	checked	  : Boolean
   //, date      : Date
 });
 
@@ -31,11 +32,24 @@ var TaskModel = mongoose.model('task', TaskSchema);
 
 // LIST / lists ALL tasks 
 // GET /tasks #TODO  <-- server gets data from DB (mongo DB), displays all tasks on redirected page
-app.get('/', function (req, res) {
+app.get('/', function (req, res){
 	TaskModel.find(function (err, tasks){
 		res.render('tasks/list.jade', {tasks: tasks});
 	});
 }); // TEST by typing "nodemon app.js" in terminal, then go to browser (localhost:3000)"
+
+// CHECKBOX function
+// POST /tasks/completed/:id
+app.post('/tasks/completed/:id', function (req, res){
+	TaskModel.findById(req.param('id'), function (err, task){
+		task.checked = !task.checked;
+		task.save(function (err, t){
+			if(err) res.send(500, err);
+
+			res.redirect('/');
+		});
+	});
+});
 
 
 // NEW  
@@ -51,7 +65,7 @@ app.post('/tasks', function (req, res){
 	var task = new TaskModel(); // instantiate new TaskModel
 	task.title = req.param('title');
 	task.body = req.param('body');
-	task.save(function(err, t){
+	task.save(function (err, t){
 		// this executes when task completes saving to DB
 		if(err) res.send(500, err); // error handling
 
@@ -84,8 +98,10 @@ app.get('/tasks/:id/edit', function (req, res){
 // PUT /tasks/:id
 app.put('/tasks/:id', function (req, res){
 	TaskModel.findById(req.param('id'), function (err, task){
+		// console.log(task);
 		task.title = req.param('title');
 		task.body = req.param('body');
+		// console.log(task);
 		task.save(function (err, t){
 			if(err) res.send(500, err);
 
@@ -97,11 +113,12 @@ app.put('/tasks/:id', function (req, res){
 
 // DELETE
 // DEL /tasks/:id
-app.del('/tasks/:id', function (req, res){
+app.delete('/tasks/:id', function (req, res){
 	TaskModel.findByIdAndRemove(req.param('id'), function (task){
 		res.redirect('/');
 	});
 });
+
 
 
 app.listen(3000);

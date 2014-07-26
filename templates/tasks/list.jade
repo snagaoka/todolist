@@ -4,6 +4,9 @@ block content
 	ul
 		each task in tasks
 			li 
+				form(action="/tasks/completed/#{task._id}", method="POST", enctype="application/x-www-form-urlencoded")
+					input#checkbox(type="checkbox", name="task", checked=(task.checked ? "checked" : undefined))
+					button Submit
 				a(href="/tasks/#{task._id}")
 					span.title= task.title
 				br
