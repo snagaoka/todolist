@@ -1,6 +1,8 @@
 extends ../layout.jade
 
 block content
+	h2  
+
 	ul
 		each task in tasks
 			li(class=(task.checked ? "green" : ""))
@@ -13,6 +15,8 @@ block content
 					span.title= task.title
 				br
 				span.body= task.body
+
+
 
 	a(href="/tasks/new")		
 		button New
