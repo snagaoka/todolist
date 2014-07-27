@@ -3,16 +3,18 @@ extends ../layout.jade
 block content
 	ul
 		each task in tasks
-			li 
+			li(class=(task.checked ? "green" : ""))
 				form(action="/tasks/completed/#{task._id}", method="POST", enctype="application/x-www-form-urlencoded")
-					input#checkbox(type="checkbox", name="task", checked=(task.checked ? "checked" : undefined))
-					button Submit
+					//- div
+					input.checkbox(type="checkbox", name="task", checked=(task.checked ? "checked" : undefined))
+					//- button Submit
+					//- console.log
 				a(href="/tasks/#{task._id}")
 					span.title= task.title
 				br
 				span.body= task.body
 
-	a(href="/tasks/new")			
+	a(href="/tasks/new")		
 		button New
 
 

@@ -11,6 +11,7 @@ app.use(bodyParser.json());
 app.use(methodOverride('_method')); // must be after bodyParser, allows PUT request 
 
 app.set('views', __dirname + '/templates');
+app.use(express.static(__dirname + '/public'));
 mongoose.connect('mongodb://user1:monguse53@ds053429.mongolab.com:53429/tasksdb'); // add login
 
 // Sets up schema type for mongoose
@@ -47,6 +48,7 @@ app.post('/tasks/completed/:id', function (req, res){
 			if(err) res.send(500, err);
 
 			res.redirect('/');
+		console.log("checked works");
 		});
 	});
 });
