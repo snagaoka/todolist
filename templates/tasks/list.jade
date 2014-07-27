@@ -5,7 +5,7 @@ block content
 
 	ul
 		each task in tasks
-			li(class=(task.checked ? "green" : ""))
+			li(class=(task.checked ? "green" : "notDone"))
 				form(action="/tasks/completed/#{task._id}", method="POST", enctype="application/x-www-form-urlencoded")
 					//- div
 					input.checkbox(type="checkbox", name="task", checked=(task.checked ? "checked" : undefined))
@@ -15,10 +15,12 @@ block content
 					span.title= task.title
 				br
 				span.body= task.body
-
+				br
+				a(href="/tasks/#{task._id}")
+					button#edit Edit
+				form(action="/tasks/#{task._id}?_method=DELETE", method="POST", enctype="application/x-www-form-urlencoded")
+					button#del Delete
 
 
 	a(href="/tasks/new")		
 		button New
-
-
