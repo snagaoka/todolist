@@ -36,8 +36,22 @@ app.get('/users/login', function (req, res){
 });
 
 // Validate that username and password exists
-	// if doesn't exist
+	// if doesn't exist, report invalidation error & redirect to login page
+app.post('/users/login', function (req, res){
+	// test to see if server is accepting form data
+	// console.log(req.param('username')); 
+	// console.log(req.param('password')); 
 	
+	// Report invalidation error
+	if(req.param('username') === '' ){
+		console.log("username blank");
+	}
+
+	if(req.param('password') === ''){
+		console.log("password blank");
+	}
+});
+
 
 // Authenticate
 
