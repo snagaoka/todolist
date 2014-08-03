@@ -1,0 +1,15 @@
+extends ../layout.jade
+
+block content
+	h1 Your To Do List 
+	h2 Log In
+
+	form(action="/users/login", method="POST", enctype="application/x-www-form-urlencoded")
+		p 
+			label(for="username_input") Username:
+			input#username_input(type="text", name="username")
+		p
+			label(for="password_input") Password:
+			input#password_input(type="text", name="password")
+		p
+			button Log In

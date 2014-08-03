@@ -1,6 +1,8 @@
 extends ../layout.jade
 
 block content
+	h1  To Do List
+
 	form(action="/tasks", method="POST", enctype="application/x-www-form-urlencoded")
 		p
 			label(for="title_input") Title:

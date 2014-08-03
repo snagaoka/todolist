@@ -8,7 +8,7 @@ $(document).ready(function(){
 	// $("h2").append("You have " + li.length + " tasks");
 
 	var notDone = $(".notDone");
-	$("h2").html("You have " + notDone.length + " tasks");
+	$("h2.taskCounter").html("You have " + notDone.length + " tasks");
 
 });
 
