@@ -5,10 +5,12 @@ var mongoose = require('mongoose');
 var jade = require('jade');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
+var session = require('express-session');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodOverride('_method')); // must be after bodyParser, allows PUT request 
+app.use(session({ secret : 'sessionkey'}));
 
 app.set('views', __dirname + '/templates');
 app.use(express.static(__dirname + '/public'));
@@ -74,16 +76,23 @@ app.post('/users/login', function (req, res){
 
 
 
+
+
 // CRUD TaskItems
 // INDEX
 
 // LIST / lists ALL tasks 
 // GET /tasks #TODO  <-- server gets data from DB (mongo DB), displays all tasks on redirected page
 app.get('/', function (req, res){
-	TaskModel.find(function (err, tasks){
-		res.render('tasks/list.jade', {tasks: tasks});
-	});
+	if(req.session.user !== undefined){
+		TaskModel.find(function (err, tasks){
+			res.render('tasks/list.jade', {tasks: tasks});
+		});
+	}else{ // not logged in
+		res.redirect('/users/login');
+	}
 }); // TEST by typing "nodemon app.js" in terminal, then go to browser (localhost:3000)"
+
 
 // CHECKBOX function
 // POST /tasks/completed/:id
@@ -165,6 +174,12 @@ app.delete('/tasks/:id', function (req, res){
 	TaskModel.findByIdAndRemove(req.param('id'), function (task){
 		res.redirect('/');
 	});
+});
+
+
+app.get('/logout', function (req, res){
+	req.session.user = undefined;
+	res.redirect('/login');
 });
 
 
