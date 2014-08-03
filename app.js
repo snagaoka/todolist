@@ -41,15 +41,32 @@ app.post('/users/login', function (req, res){
 	// test to see if server is accepting form data
 	// console.log(req.param('username')); 
 	// console.log(req.param('password')); 
-	
+
+	var options = {
+		error : false,
+		errorMessage : []
+	};
+
 	// Report invalidation error
-	if(req.param('username') === '' ){
-		console.log("username blank");
+	if(req.param('username') === ''){
+		// console.log("username blank");
+		options.error = true;
+		options.errorMessage.push("Username is empty");
 	}
 
 	if(req.param('password') === ''){
-		console.log("password blank");
+		// console.log("password blank");
+		options.error = true; 
+		options.errorMessage.push("Password is empty");
 	}
+
+	if(options.error){
+		res.render('users/login.jade', options);
+		return;
+	}
+
+	res.redirect('/');
+
 });
 
 

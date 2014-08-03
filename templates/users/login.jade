@@ -8,8 +8,14 @@ block content
 		p 
 			label(for="username_input") Username:
 			input#username_input(type="text", name="username")
+					
 		p
 			label(for="password_input") Password:
 			input#password_input(type="text", name="password")
+			
 		p
 			button Log In
+
+	if error
+		each error in errorMessage
+			p= error
