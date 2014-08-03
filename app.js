@@ -35,6 +35,13 @@ app.get('/users/login', function (req, res){
 	res.render('users/login.jade');
 });
 
+// Validate that username and password exists
+	// if doesn't exist
+	
+
+// Authenticate
+
+
 
 // CRUD TaskItems
 // INDEX
@@ -102,14 +109,6 @@ app.get('/tasks/:id/edit', function (req, res){
 		res.render('tasks/edit.jade', {task: task});
 	});
 });
-
-// Validate that username and password are not blank
-
-
-// Validate that username and password exists
-
-
-// Authenticate
 
 
 // UPDATE
