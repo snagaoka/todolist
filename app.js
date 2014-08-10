@@ -21,16 +21,26 @@ var Schema = mongoose.Schema;
   //, ObjectId = Schema.ObjectId;
 
 var TaskSchema = new Schema({
-	title     : String
-  , body      : String
-  ,	checked	  : Boolean
-  //, date      : Date
+	title     : String,
+  	body      : String,
+  	checked	  : Boolean
+  // , date      : Date
 });
-
 var TaskModel = mongoose.model('task', TaskSchema);
+
+// Set up schema for users in mongolab
+var UserSchema = new Schema ({
+	email : String,
+	password : String
+});
+var UserModel = mongoose.model('user', UserSchema);
 
 
 // CRUD Users
+
+// SIGN UP page
+
+
 
 // LOGIN page
 app.get('/users/login', function (req, res){
