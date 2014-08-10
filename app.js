@@ -67,12 +67,32 @@ app.post('/users/login', function (req, res){
 		return;
 	}
 
-	res.redirect('/');
+
+	// Authenticate username and password
+	var fakeusername = "shannon";
+	var fakepassword = "123";
+	var errors = "";
+
+	if(req.param('username') === "shannon" && req.param('password') === "123"){
+		var user = {
+			id: 1, 
+			username : fakeusername,
+			password : fakepassword
+		};
+
+		req.session.user = user; // stores them in this session
+		res.redirect('/'); // redirects user to tasks
+		return;
+	} else {
+		options.errorMessage.push("Incorrect Username and Password. Please re-enter.");
+		options.error = true;
+		res.render('users/login.jade', options);
+	}
+
+
 
 });
 
-
-// Authenticate
 
 
 
