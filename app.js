@@ -29,8 +29,9 @@ var TaskSchema = new Schema({
 var TaskModel = mongoose.model('task', TaskSchema);
 
 // Set up schema for users in mongolab
-var UserSchema = new Schema ({
+var UserSchema = new Schema({
 	email : String,
+	username : String,
 	password : String
 });
 var UserModel = mongoose.model('user', UserSchema);
@@ -39,6 +40,28 @@ var UserModel = mongoose.model('user', UserSchema);
 // CRUD Users
 
 // SIGN UP page
+
+// SHOW 
+	// GET /users/register <-- shows registration page
+	// create new jade file
+app.get('/users/register', function (req, res){
+	res.render('users/register.jade');
+});
+
+// POST /users/register <-- POST from form to create new user
+	// after user registered to DB, redirect user to login page
+app.post('/users/register', function (req, res){
+	var user = new UserModel(); // instantiate new UserModel
+	user.email = req.param('email');
+	user.username = req.param('username');
+	user.password = req.param('password');
+	user.save(function (err, t){
+		// this executes when user is saved to DB
+		if(err) res.send (500, err); // error handling
+		console.log('set up username');
+		res.redirect('/users/login'); // successful user registration
+	});
+});
 
 
 
@@ -79,32 +102,23 @@ app.post('/users/login', function (req, res){
 
 
 	// Authenticate username and password
-	var fakeusername = "shannon";
-	var fakepassword = "123";
 	var errors = "";
 
-	if(req.param('username') === "shannon" && req.param('password') === "123"){
-		var user = {
-			id: 1, 
-			username : fakeusername,
-			password : fakepassword
-		};
+	UserModel.find({ username : req.param["username_input"]}, function (err, user){
+		if(err) res.send(500, err);
 
+		res.redirect('/');
 		req.session.user = user; // stores them in this session
-		res.redirect('/'); // redirects user to tasks
-		return;
-	} else {
-		options.errorMessage.push("Incorrect Username and Password. Please re-enter.");
-		options.error = true;
-		res.render('users/login.jade', options);
-	}
-
-
-
+		
+	// 	res.redirect('/'); // redirects user to tasks
+	// 	return;
+	// } else {
+	// 	options.errorMessage.push("Incorrect Username and Password. Please re-enter.");
+	// 	options.error = true;
+	// 	res.render('users/login.jade', options);
+	// }
+	});
 });
-
-
-
 
 
 
