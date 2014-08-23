@@ -175,12 +175,13 @@ app.get('/tasks/new', function (req, res){
 app.post('/tasks', function (req, res){
 	var task = new TaskModel(); // instantiate new TaskModel
 	task.title = req.param('title');
-	task.body = req.param('body');
+	// task.body = req.param('body');
 	task.save(function (err, t){
 		// this executes when task completes saving to DB
 		if(err) res.send(500, err); // error handling
 
-		res.redirect('/'); // successful save
+		res.json(task); // successful save
+
 	});
 });
 

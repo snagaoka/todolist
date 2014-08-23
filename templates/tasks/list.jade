@@ -3,8 +3,12 @@ extends ../layout.jade
 block content
 	h1  To Do List
 
-	h2.taskCounter
+	h2 Add New Task
+	form#form(action="/tasks", method="POST", enctype="application/x-www-form-urlencoded")
+		input#title_input(type="text", name="title")
+		button Add
 
+	h2.taskCounter
 	ul
 		each task in tasks
 			li(class=(task.checked ? "green" : "notDone"))
@@ -22,7 +26,6 @@ block content
 					button#edit Edit
 				form(action="/tasks/#{task._id}?_method=DELETE", method="POST", enctype="application/x-www-form-urlencoded")
 					button#del Delete
-
 
 	a(href="/tasks/new")		
 		button New
