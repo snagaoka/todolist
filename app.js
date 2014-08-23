@@ -156,8 +156,9 @@ app.post('/tasks/completed/:id', function (req, res){
 		task.save(function (err, t){
 			if(err) res.send(500, err);
 
-			res.redirect('/');
-		console.log("checked works");
+			// res.redirect('/');
+			// console.log("checked works");
+			res.json(task);
 		});
 	});
 });

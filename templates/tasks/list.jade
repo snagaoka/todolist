@@ -9,10 +9,10 @@ block content
 		button Add
 
 	h2.taskCounter
-	ul
+	ul.taskList
 		each task in tasks
 			li(class=(task.checked ? "green" : "notDone"))
-				form(action="/tasks/completed/#{task._id}", method="POST", enctype="application/x-www-form-urlencoded")
+				form.checkboxForm(action="/tasks/completed/#{task._id}", method="POST", enctype="application/x-www-form-urlencoded")
 					//- div
 					input.checkbox(type="checkbox", name="task", checked=(task.checked ? "checked" : undefined))
 					//- button Submit
