@@ -77,6 +77,8 @@ app.post('/users/login', function (req, res){
 	// console.log(req.param('username')); 
 	// console.log(req.param('password')); 
 
+	console.log(req.body);
+
 	var options = {
 		error : false,
 		errorMessage : []
@@ -104,19 +106,27 @@ app.post('/users/login', function (req, res){
 	// Authenticate username and password
 	var errors = "";
 
-	UserModel.find({ username : req.param["username_input"]}, function (err, user){
-		if(err) res.send(500, err);
+	UserModel.findOne({ username : req.param('username') }, function (err, user){
+		if(err) {
+			res.send(500, err);
+			// console.log(user);
+		}
+		// console.log('found user', user);
 
-		res.redirect('/');
-		req.session.user = user; // stores them in this session
-		
-	// 	res.redirect('/'); // redirects user to tasks
-	// 	return;
-	// } else {
-	// 	options.errorMessage.push("Incorrect Username and Password. Please re-enter.");
-	// 	options.error = true;
-	// 	res.render('users/login.jade', options);
-	// }
+
+		if(user.password === req.param('password')){
+
+			req.session.user = user; // stores them in this session
+
+			res.redirect('/');
+
+		} else {
+
+			options.errorMessage.push("Incorrect Username and Password. Please re-enter.");
+			options.error = true;
+			res.render('users/login.jade', options);
+
+		}
 	});
 });
 
