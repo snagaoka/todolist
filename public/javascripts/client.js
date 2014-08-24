@@ -1,22 +1,23 @@
 $(document).ready(function(){
 
-	$(".checkbox").on("click", function(){
+	$("ul.taskList").on("click", ".checkbox", function(){
 		$(this).parent().submit();
+		console.log("check");
 	});
 
-	$(".checkboxForm").submit(function(event){ // checked feature
+	$("ul.taskList").on("submit", ".checkboxForm", function(event){ // checked feature
 		event.preventDefault();
-		var thisCheckbox = $(this);
+		var thisCheckboxForm = $(this);
 		$.ajax($(this).attr("action"), {
 				method: "POST",
 				data: $(this).serialize(),
 				success: function(updatedTask){
-					// console.log("hurray");
+					console.log("hurray");
 
 					if (updatedTask.checked){
-						thisCheckbox.parent().addClass("green");
+						thisCheckboxForm.parent().addClass("green");
 					} else {
-						thisCheckbox.parent().removeClass("green").addClass("notDone");
+						thisCheckboxForm.parent().removeClass("green").addClass("notDone");
 					}
 
 				},
@@ -28,20 +29,19 @@ $(document).ready(function(){
 	
 
 	// Delete button
-	$(".deleteButton").on("click", function(){
+	$("ul.taskList").on("click", ".deleteButton", function(){
 		$(this).parent().submit();
 	});
 
-	$(".deleteForm").submit(function(event){
+	$("ul.taskList").on("submit", ".deleteForm", function(event){
 		event.preventDefault();
 		var thisDeleteForm = $(this);
+		// console.log(thisDeleteForm);
 		$.ajax($(this).attr("action"), {
 			method: "POST",
 			data: $(this).serialize(),
 			success: function(deletedTask){
-				console.log("deleted");
-				// $(this).parent().remove
-
+				thisDeleteForm.parent().remove();
 			},
 			failure: function(error){
 				console.log("error");
@@ -66,7 +66,10 @@ $(document).ready(function(){
 				var eachTask = $("<li>");
 
 					// create checkbox form
-					var newForm = $("<form>");
+					var newForm = $("<form>", {
+						class: "checkboxForm",
+						action: "/tasks/completed/" + newTask._id
+					});
 
 
 					// create task text hyperlink (goes to SHOW page)
@@ -98,7 +101,7 @@ $(document).ready(function(){
 
 				
 				eachTask.append(newForm); // checkbox
-				newForm.append($("<input type='checkbox' name='task'>"));
+				newForm.append($("<input type='checkbox' name='task' class='checkbox'>"));
 				eachTask.append(hrefToShow); // task link
 				eachTask.append($("<br>"));
 				eachTask.append(linkToEdit); // Edit link
