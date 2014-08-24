@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
 	$(".checkbox").on("click", function(){
 		$(this).parent().submit();
 	});
@@ -27,7 +28,27 @@ $(document).ready(function(){
 	
 
 	// Delete button
-	// $("#del").submit(function)
+	$(".deleteButton").on("click", function(){
+		$(this).parent().submit();
+	});
+
+	$(".deleteForm").submit(function(event){
+		event.preventDefault();
+		var thisDeleteForm = $(this);
+		$.ajax($(this).attr("action"), {
+			method: "POST",
+			data: $(this).serialize(),
+			success: function(deletedTask){
+				console.log("deleted");
+				// $(this).parent().remove
+
+			},
+			failure: function(error){
+				console.log("error");
+			}
+
+		});
+	});
 
 
 	var notDone = $(".notDone");
@@ -64,13 +85,14 @@ $(document).ready(function(){
 
 					// create delete button
 					var deleteForm = $("<form />", {
-						class: "delete",
+						class: "deleteForm",
 						action: "/tasks/" + newTask._id + "?_method=DELETE",
 						method: "POST",
 						enctype: "application/x-www-form-urlencoded"
 					});
 
-					var buttonToDelete = $("<button>", {
+					var buttonToDelete = $("<button />", {
+						class: "deleteButton",
 						text: "Delete"
 					});
 
