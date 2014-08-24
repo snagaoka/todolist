@@ -22,8 +22,7 @@ block content
 				br
 				span.body= task.body
 				br
-				a(href="/tasks/#{task._id}")
-					button#edit Edit
+				a(href="/tasks/#{task._id}/edit") Edit
 				form(action="/tasks/#{task._id}?_method=DELETE", method="POST", enctype="application/x-www-form-urlencoded")
 					button#del Delete
 
