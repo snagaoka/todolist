@@ -27,7 +27,7 @@ $(document).ready(function(){
 	
 
 	// Delete button
-	
+	// $("#del").submit(function)
 
 
 	var notDone = $(".notDone");
@@ -63,6 +63,13 @@ $(document).ready(function(){
 					});
 
 					// create delete button
+					var deleteForm = $("<form />", {
+						class: "delete",
+						action: "/tasks/" + newTask._id + "?_method=DELETE",
+						method: "POST",
+						enctype: "application/x-www-form-urlencoded"
+					});
+
 					var buttonToDelete = $("<button>", {
 						text: "Delete"
 					});
@@ -74,7 +81,8 @@ $(document).ready(function(){
 				eachTask.append($("<br>"));
 				eachTask.append(linkToEdit); // Edit link
 				eachTask.append($("<br>"));
-				eachTask.append(buttonToDelete); // Delete button
+				eachTask.append(deleteForm); // Delete button
+				deleteForm.append(buttonToDelete);
 
 				$("ul.taskList").prepend(eachTask);
 
