@@ -2,13 +2,15 @@
 var gulp = require('gulp'),
     minify = require('gulp-minify-css'),
     livereload = require('gulp-livereload'),
-    nodemon = require('gule-nodemon');
+    nodemon = require('gulp-nodemon'),
+    less = require('gulp-less');
+
 
 // Paths for tasks
 var paths = {
 	css: './assets/stylesheets/*.css',
 	js: './assets/javascripts/*.js'
-}
+};
 
 gulp.task('css', function(){
 	return gulp.src(paths.css) 						// Take the css files
@@ -19,7 +21,7 @@ gulp.task('css', function(){
 
 gulp.task('js', function(){
 	return gulp.src(paths.js)						// Take the js files
-		.pipe(minify())								// Minify the js
+		// .pipe(minify())								// Minify the js
 		.pipe(gulp.dest('./public/javascripts'));	// Output to public folder
 });
 
@@ -39,8 +41,8 @@ gulp.task('watch', function(){
 
 	livereload.listen();
 
-	gulp.watch('./assets/css/*.css', ['css']);
-	gulp.watch('./public/**/*')
+	gulp.watch('assets/less/*.less', ['less']);
+	gulp.watch(['public/**/*', 'templates/**/*jade'])
 		.on('change', function(file){
 			livereload.changed(file.path);
 		});
@@ -48,6 +50,14 @@ gulp.task('watch', function(){
 });
 
 
-gulp.task('build', ['css', 'js']);
-gulp.task('default', ['build', 'server', 'watch']);
+gulp.task('less', function(){
+	return gulp.src('./assets/less/style.less')
+		.pipe(less())
+		.pipe(minify())
+		.pipe(gulp.dest('./public/css'));
+});
+
+
+gulp.task('build', ['less', 'js']);
+gulp.task('default', ['build', 'serve', 'watch']);
 

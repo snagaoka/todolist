@@ -23,10 +23,12 @@ p{
 	font-size: 14px;
 }
 
-span.title, span.body{
-	font-family: 'Open Sans', sans-serif;
-	font-weight: 400;
-	font-size: 14px;
+span{
+	&.title, &.body{
+		font-family: 'Open Sans', sans-serif;
+		font-weight: 400;
+		font-size: 14px;
+	}
 }
 
 a{
@@ -36,9 +38,19 @@ a{
 }
 
 button{
-	border: 20px solid;
-	color: #ffffff;
-	background: #A82323;
-	border-radius: 25px;
-	border-color: none;
+	&#register{
+		border: 20px solid;
+		color: #ffffff;
+		background: #c60f13;
+		border-radius: 25px;
+		border-color: none;
+	&#login{
+		border: 20px solid;
+		color: #ffffff;
+		background: #383838;
+		border-radius: 25px;
+		border-color: none;
+	}
 }
+
+
