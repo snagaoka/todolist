@@ -1,10 +1,21 @@
 $(document).ready(function(){
 
+	// Run this first
+	function updateTaskCounter(){
+		var notDone = $(".notDone");
+		$("h2.taskCounter").html("You have " + notDone.length + " tasks");
+	}
+	updateTaskCounter();
+
+	// Event trigger - sets up checkbox as a form submission
+	// Triggers event below
 	$("ul.taskList").on("click", ".checkbox", function(){
 		$(this).parent().submit();
 		console.log("check");
 	});
 
+	// Event triggered by checkbox above
+	// Sets to green
 	$("ul.taskList").on("submit", ".checkboxForm", function(event){ // checked feature
 		event.preventDefault();
 		var thisCheckboxForm = $(this);
@@ -42,6 +53,9 @@ $(document).ready(function(){
 			data: $(this).serialize(),
 			success: function(deletedTask){
 				thisDeleteForm.parent().remove();
+
+				updateTaskCounter();
+
 			},
 			failure: function(error){
 				console.log("error");
@@ -50,20 +64,15 @@ $(document).ready(function(){
 		});
 	});
 
-
-	var notDone = $(".notDone");
-	$("h2.taskCounter").html("You have " + notDone.length + " tasks");
-
-
 	// Add task to task list
-	$("#form").submit(function(event){
+	$("#addForm").submit(function(event){
 		event.preventDefault(); // stops from submitting and refreshing page
 		$.ajax("/tasks", {
 			method: "POST",
-			data: $("#form").serialize(), // data being sent to server, serialize changes data to JSON
+			data: $("#addForm").serialize(), // data being sent to server, serialize changes data to JSON
 			success: function(newTask){ // put new task (object) into array
 				// {"__v":0,"title":"class","_id":"53f90524fb087b0000c86f93"}
-				var eachTask = $("<li>");
+				var eachTask = $("<li>").addClass('notDone');
 
 					// create checkbox form
 					var newForm = $("<form>", {
@@ -99,7 +108,7 @@ $(document).ready(function(){
 						text: "Delete"
 					});
 
-				
+			
 				eachTask.append(newForm); // checkbox
 				newForm.append($("<input type='checkbox' name='task' class='checkbox'>"));
 				eachTask.append(hrefToShow); // task link
@@ -110,6 +119,8 @@ $(document).ready(function(){
 				deleteForm.append(buttonToDelete);
 
 				$("ul.taskList").prepend(eachTask);
+
+				updateTaskCounter();
 
 			},
 			failure: function(error){

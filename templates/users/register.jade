@@ -1,12 +1,14 @@
 extends ../layout.jade
 
 block content
-	h1 Register your username and password
+	h1 Registration Form
+
+	h2 Create a Username and Password
 
 	form(action="/users/register", method="POST", enctype="application/x-www-form-urlencoded")
 		p
 			label(for="email_input") Email address:
-			input#email_input(type="text", name="email")
+			input#email_input(type="text", name="email", size="30")
 		p
 			label(for="username_input") Set username:
 			input#username_input(type="text", name="username")

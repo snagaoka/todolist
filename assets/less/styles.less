@@ -1,56 +1,100 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800);
 
-.green {
-	text-decoration: line-through;
-	background-color: green;
+body{
+	background-image: url('/images/tiny_grid.png');
+	background-repeat: repeat;
 }
 
-h1{
-	font-family: 'Open Sans', sans-serif;
-	font-weight: 700;
-	font-size: 36px;
+li{
+	list-style: none;
 }
 
-h2{
-	font-family: 'Open Sans', sans-serif;
-	font-weight: 300;
-	font-size: 20px;
-}
+#container{
 
-p{
-	font-family: 'Open Sans', sans-serif;
-	font-weight: 300;
-	font-size: 14px;
-}
-
-span{
-	&.title, &.body{
+	h1{
+		text-align: center;
 		font-family: 'Open Sans', sans-serif;
-		font-weight: 400;
+		font-weight: 700;
+		font-size: 36px;
+	}
+
+	h2{
+		text-align: center;
+		font-family: 'Open Sans', sans-serif;
+		font-weight: 300;
+		font-size: 20px;
+		&.taskCounter{
+			font-size: 16px;
+			text-align: left;
+		}
+	}
+
+	#addForm{
+		text-align: center;
+	}
+
+	input{
+		height: 34px;
+	}
+
+	#taskArea{
+		text-align: left;
+		margin: 40px;
+		ul.taskList{
+			li{
+				border: solid 1px #bbb;
+				margin-bottom: 5px;
+			}
+		}
+	}
+
+	#newButton{
+		text-align: left;
+		margin: 40px;
+	}
+
+	p{
+		font-family: 'Open Sans', sans-serif;
+		font-weight: 300;
 		font-size: 14px;
 	}
-}
 
-a{
-	font-family: 'Open Sans', sans-serif;
-	font-weight: 300;
-	font-size: 14px;
-}
-
-button{
-	&#register{
-		border: 20px solid;
-		color: #ffffff;
-		background: #c60f13;
-		border-radius: 25px;
-		border-color: none;
-	&#login{
-		border: 20px solid;
-		color: #ffffff;
-		background: #383838;
-		border-radius: 25px;
-		border-color: none;
+	span{
+		&.title, &.body{
+			font-family: 'Open Sans', sans-serif;
+			font-weight: 400;
+			font-size: 14px;
+		}
 	}
-}
 
+	a{
+		font-family: 'Open Sans', sans-serif;
+		font-weight: 300;
+		font-size: 14px;
+	}
+
+	.green {
+		text-decoration: line-through;
+		background-color: green;
+	}
+
+// LOGIN page
+	button{
+		&#register{
+			border: 20px solid;
+			color: #ffffff;
+			background: #c60f13;
+			border-radius: 25px;
+			border-color: none;
+		}
+		&#login{
+			border: 20px solid;
+			color: #ffffff;
+			background: #383838;
+			border-radius: 25px;
+			border-color: none;
+		}
+	}
+
+}
 

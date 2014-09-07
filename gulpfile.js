@@ -21,7 +21,7 @@ gulp.task('css', function(){
 
 gulp.task('js', function(){
 	return gulp.src(paths.js)						// Take the js files
-		// .pipe(minify())								// Minify the js
+		// .pipe(minify())							// Minify the js
 		.pipe(gulp.dest('./public/javascripts'));	// Output to public folder
 });
 
@@ -42,7 +42,8 @@ gulp.task('watch', function(){
 	livereload.listen();
 
 	gulp.watch('assets/less/*.less', ['less']);
-	gulp.watch(['public/**/*', 'templates/**/*jade'])
+	gulp.watch('assets/javascripts/*.js', ['js']);
+	gulp.watch(['public/**/*', 'templates/**/*.jade'])
 		.on('change', function(file){
 			livereload.changed(file.path);
 		});
@@ -51,10 +52,10 @@ gulp.task('watch', function(){
 
 
 gulp.task('less', function(){
-	return gulp.src('./assets/less/style.less')
+	return gulp.src('./assets/less/styles.less')
 		.pipe(less())
 		.pipe(minify())
-		.pipe(gulp.dest('./public/css'));
+		.pipe(gulp.dest('./public/stylesheets'));
 });
 
 

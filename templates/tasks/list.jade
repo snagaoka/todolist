@@ -1,31 +1,35 @@
 extends ../layout.jade
 
 block content
-	h1  To Do List
+	h1 To Do List
 
 	h2 Add New Task
-	form#form(action="/tasks", method="POST", enctype="application/x-www-form-urlencoded")
-		input#title_input(type="text", name="title")
-		button Add
+	form#addForm(action="/tasks", method="POST", enctype="application/x-www-form-urlencoded")
+		input#title_input(type="text", name="title", size="100", height="20")
+		button.button.tiny Add
 
-	h2.taskCounter
-	ul.taskList
-		each task in tasks
-			li(class=(task.checked ? "green" : "notDone"))
-				form.checkboxForm(action="/tasks/completed/#{task._id}", method="POST", enctype="application/x-www-form-urlencoded")
-					//- div
-					input.checkbox(type="checkbox", name="task", checked=(task.checked ? "checked" : undefined))
-					//- button Submit
-					//- console.log
-				a(href="/tasks/#{task._id}")
-					span.title= task.title
-				br
-				span.body= task.body
-				br
-				a(href="/tasks/#{task._id}/edit") Edit
+	div#taskArea
+		h2.taskCounter
+		ul.taskList
+			each task in tasks
+				li(class=(task.checked ? "green" : "notDone"))
+					form.checkboxForm(action="/tasks/completed/#{task._id}", method="POST", enctype="application/x-www-form-urlencoded")
+						//- div
+						div.switch
+							input.checkbox(type="checkbox", name="task", checked=(task.checked ? "checked" : undefined))
+						//- button Submit
+						//- console.log
+					div.title
+						a(href="/tasks/#{task._id}")
+							span.title= task.title
+					div.body
+						span.body= task.body
+					div.editLink
+						a(href="/tasks/#{task._id}/edit") Edit
 
-				form.deleteForm(action="/tasks/#{task._id}?_method=DELETE", method="POST", enctype="application/x-www-form-urlencoded")
-					button.deleteButton Delete
+					form.deleteForm(action="/tasks/#{task._id}?_method=DELETE", method="POST", enctype="application/x-www-form-urlencoded")
+						button.deleteButton.button.tiny Delete
 
-	a(href="/tasks/new")		
-		button New
+	div#newButton
+		a(href="/tasks/new")		
+			button.button.tiny New
